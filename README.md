@@ -17,12 +17,6 @@ This repository contains the implementation of gradient-based smoothing paramete
 - NumPy
 - Other dependencies listed in `requirements.txt`
 
-## Installation
-
-1. Clone the repository: 'git clone https://github.com/Marei33/DDL-PSplines.git'
-
-2. Install the required dependencies: 'pip install -r requirements.txt'
-
 
 ## Usage
 
@@ -30,5 +24,5 @@ This repository contains the implementation of gradient-based smoothing paramete
 
 - Refer to the `multidimensional` directory for notebooks showing the optimization process fitting two P-splines.
 
-- Directory `big-data` contains the optimization of a neural P-spline when having a huge dataset where batching is needed.
+- The directory `big-data` contains the optimization of a neural P-spline when having a huge dataset where batching is additionally needed.
 
