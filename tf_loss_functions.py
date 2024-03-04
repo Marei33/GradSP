@@ -64,7 +64,7 @@ def gcv_1d(y, design_matrix_Z, reg_matrix_K, reg_param):
     S = design_matrix_Z @ G_inv @ tf.linalg.matrix_transpose(design_matrix_Z)
 
     n = y.shape[0]
-    alpha_0 = y - tf.linalg.matmul(S, y)  ### HIER
+    alpha_0 = y - tf.linalg.matmul(S, y)
     alpha = tf.linalg.matmul(a=alpha_0, b=alpha_0, transpose_a=True)
     delta = n - tf.linalg.trace(S)
 
@@ -104,13 +104,12 @@ def reml_1d(y, design_matrix_Z, reg_matrix_K, reg_param):
         - G.shape[0] * tf.math.log(phi)
     ) / 2
 
-    # reml3 = - tf.cast(tf.linalg.matrix_rank(reg_matrix_K), dtype=tf.float32 ) * tf.math.log(reg_param/phi) / 2 # + log(detplus(K)) - for derivative not relevant
-
+    
     reml3 = (
         -tf.cast(np.linalg.matrix_rank(reg_matrix_K), dtype=tf.float32)
         * tf.math.log(reg_param / phi)
         / 2
-    )  # + log(detplus(K)) - for derivative not relevant
+    )
 
     reml = reml1 + reml2 + reml3
     return reml
