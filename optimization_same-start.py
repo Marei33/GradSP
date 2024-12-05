@@ -173,7 +173,7 @@ for method in methods:
             )
 
             weight_est = np.dot(x1_ps.U, weights.numpy())
-            lambda_param_est = lambda_param.numpy()
+            lambda_param_est = tf.exp(lambda_param).numpy()
             lambda_param_est_opt[k, j] = lambda_param_est
             print(f"Optimization finished \nSmoothing parameter: {lambda_param_est}")
 
