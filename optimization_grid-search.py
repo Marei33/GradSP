@@ -95,14 +95,14 @@ for method in methods:
                         y=labels,
                         design_matrix_Z=np.float32(x1_ps.design_matrix),
                         reg_matrix_K=np.float32(x1_ps.penalty_matrix),
-                        reg_param=lambda_param_range[i],
+                        reg_param=tf.exp(lambda_param_range[i]),
                     )
                 if method == "reml":
                     value = lf.reml_1d(
                         y=labels,
                         design_matrix_Z=np.float32(x1_ps.design_matrix),
                         reg_matrix_K=np.float32(x1_ps.penalty_matrix),
-                        reg_param=lambda_param_range[i],
+                        reg_param=tf.exp(lambda_param_range[i]),
                     )
                 crit_values.append(value)
 
@@ -138,14 +138,14 @@ for method in methods:
                         y=labels,
                         design_matrix_Z=x1_ps.design_matrix_d,
                         reg_matrix_K=x1_ps.penalty_matrix_d,
-                        reg_param=lambda_param,
+                        reg_param=tf.exp(lambda_param),
                     )
                 if method == "reml":
                     loss = lambda: lf.reml_1d(
                         y=labels,
                         design_matrix_Z=x1_ps.design_matrix_d,
                         reg_matrix_K=x1_ps.penalty_matrix_d,
-                        reg_param=lambda_param,
+                        reg_param=tf.exp(lambda_param),
                     )
                 opt_lambda_param.minimize(loss, var_list=[lambda_param])
                 pen_loss = loss().numpy().item()
@@ -156,7 +156,7 @@ for method in methods:
                         y=labels,
                         weights=weights,
                         design_matrix=x1_ps.design_matrix_d,
-                        reg_param=lambda_param,
+                        reg_param=tf.exp(lambda_param),
                         penalty_matrix=x1_ps.penalty_matrix_d,
                     )
                     opt_splines.minimize(loss, var_list=[weights])
@@ -165,7 +165,7 @@ for method in methods:
                 if (i + 1) % 100 == 0:
                     print(f"Epoch: {i+1}")
                     epochs_saved.append(i + 1)
-                    lambda_param_est = lambda_param.numpy()
+                    lambda_param_est = tf.exp(lambda_param).numpy()
                     lambda_param_est_values.append(lambda_param_est)
                     pen_loss_values.append(pen_loss)
 
@@ -181,7 +181,7 @@ for method in methods:
             )
 
             weight_est = np.dot(x1_ps.U, weights.numpy())
-            lambda_param_est = lambda_param.numpy()
+            lambda_param_est = tf.exp(lambda_param).numpy()
             lambda_param_est_opt[k, j] = lambda_param_est
             print(f"Optimization finished \nSmoothing parameter: {lambda_param_est}")
 
